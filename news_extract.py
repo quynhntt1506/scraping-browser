@@ -2,8 +2,6 @@ from lxml.html.clean import clean_html
 from lxml import html
 import json
 
-
-
 # Giả sử html_content đã được lấy từ một trang web
 def scraping_data (htmls):
     output_data = {}

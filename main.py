@@ -67,6 +67,10 @@ def inject_highlight_script(driver):
             currentElements.forEach(el => el.classList.remove('highlight-border'));
             currentElements.clear();
         }
+        function clearFormatClass(classString) {
+            const regex = /^(mb|ml|mt|mr|p|pl|pr|pt|pb|text|bg)-\d+$/;
+            return classString.split(" ").filter(cls => !regex.test(cls)).join(" ")
+        }
 
         document.addEventListener('mousemove', function(event) {
             let el = document.elementFromPoint(event.clientX, event.clientY);
@@ -77,7 +81,7 @@ def inject_highlight_script(driver):
             let parent = el.parentElement;
 
             let elements = [...parent.children].filter(child => 
-                child.tagName.toLowerCase() === tagName && (child.className.trim().includes(className) || className.includes(child.className.trim()))    
+                child.tagName.toLowerCase() === tagName && (clearFormatClass(child.className.trim()).includes(clearFormatClass(className)) || clearFormatClass(className).includes(clearFormatClass(child.className.trim())))    
             );
 
             let newHoveredElements = new Set(elements);
