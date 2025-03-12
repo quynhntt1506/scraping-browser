@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-
+#KHÔNG DÙNG
 ## get text
 # def extract_texts(html):
 #     soup = BeautifulSoup(html, "html.parser")

@@ -1,159 +1,125 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from crawl_data import extract_texts
-from news_extract import *
-import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+
+# KHÔNG DÙNG
 
 # Đường dẫn đến ChromeDriver
-CHROME_DRIVER_PATH = "chromedriver.exe"
-WEBSITE_URL = "https://vietnamnet.vn/"
+chrome_driver_path = "chromedriver.exe"
 
-def setup_driver():
-    """ Khởi tạo WebDriver """
-    service = Service(CHROME_DRIVER_PATH)
-    options = Options()
-    driver = webdriver.Chrome(service=service, options=options)
-    return driver
+# Tạo Service
+service = Service(chrome_driver_path)
 
-def load_website(driver, url):
-    """ Mở trang web và full màn hình """
-    driver.get(url)
-    driver.maximize_window()
+# Tạo ChromeOptions (có thể bỏ qua nếu không cần tuỳ chỉnh)
+options = Options()
 
-def inject_mouse_tracking_script(driver):
-    """ Inject JavaScript để theo dõi vị trí chuột """
-    driver.execute_script("""
-        document.addEventListener('mousemove', function(event) {
-            window.mouseX = event.clientX;
-            window.mouseY = event.clientY;
-        });
-    """)
-    print("🔹 Di chuyển chuột trong trình duyệt để kiểm tra vị trí.")
+# Khởi tạo WebDriver đúng cách
 
-def get_mouse_position(driver):
-    """ Lấy vị trí hiện tại của chuột từ JavaScript """
-    x = driver.execute_script("return window.mouseX;")
-    y = driver.execute_script("return window.mouseY;")
-    return x, y
+driver = webdriver.Chrome(service=service, options=options)
 
-def get_element_at_position(driver, x, y):
-    """ Lấy phần tử tại vị trí chuột """
-    return driver.execute_script("return document.elementFromPoint(arguments[0], arguments[1]);", x, y)
+# Mở trang web
+website = 'https://vnexpress.net/bo-tai-chinh-phai-trinh-nghi-quyet-ve-quan-ly-tien-ao-tuan-nay-4858810.html'
+driver.get(website)
 
-def inject_highlight_script(driver):
-    """ Inject JavaScript để highlight phần tử khi di chuột """
-    driver.execute_script("""
-        // Tạo style nếu chưa có
-        if (!document.getElementById('highlight-style')) {
-            let style = document.createElement('style');
-            style.id = 'highlight-style';
-            style.innerHTML = '.highlight-border { border: 2px solid red !important; }';
-            document.head.appendChild(style);
-        }
+#mở full màn hình
+driver.maximize_window()
 
-        // Hàm lấy selector
-        function getSelector(tag, className) {
-            let classSelector = className.trim().split(/\\s+/).join(".");
-            return tag + (classSelector ? "." + classSelector : "");
-        }
+#Set up a 30 seconds webdriver wait
+# explicit_wait30 = WebDriverWait(browser, 30)
+# driver.implicitly_wait(30)
 
-        let currentElements = new Set();
-        let lastHoveredElements = new Set();
+driver.execute_script("""
+    document.addEventListener('click', function(event) {
+        window.mouseClickX = event.clientX;
+        window.mouseClickY = event.clientY;
+    });
+""")
 
-        function clearHighlights() {
-            currentElements.forEach(el => el.classList.remove('highlight-border'));
-            currentElements.clear();
-        }
+# Chờ người dùng click rồi lấy vị trí
+input("Click vào trang web, sau đó nhấn Enter...")
+click_x = driver.execute_script("return window.mouseClickX;")
+click_y = driver.execute_script("return window.mouseClickY;")
 
-        document.addEventListener('mousemove', function(event) {
-            let el = document.elementFromPoint(event.clientX, event.clientY);
-            if (!el || !el.parentElement) return;
+print(f"Chuột đã click tại: ({click_x}, {click_y})")
 
-            let tagName = el.tagName.toLowerCase();
-            let className = el.className.trim();
-            let parent = el.parentElement;
+# Lấy element tại vị trí click
+element = driver.execute_script("return document.elementFromPoint(arguments[0], arguments[1]);", click_x, click_y)
 
-            let elements = [...parent.children].filter(child => 
-                child.tagName.toLowerCase() === tagName && child.className.trim() === className    
-            );
+# Hiển thị thông tin element nếu tồn tại
+if element:
+    tag_name_check = element.tag_name.lower()
+    # kiểm tra xem vị trí đã click có phải thẻ a không
+    if tag_name_check == 'a':
+        # lấy link của thẻ a 
+        link_url = element.get_attribute("href")
+        if link_url:
+            print(f"Đang chuyển hướng đến đường dẫn: {link_url}")
+            driver.get(link_url) 
+    # kiểm tra phần tử có URL không
+    elif "href" in element.get_attribute("outerHTML"):
+        link_url = element.get_attribute("href")
+        if link_url:
+            print(f"Đang chuyển hướng đến đường dẫn: {link_url}")
+            driver.get(link_url) 
+    else:
+        tag_name = element.tag_name
+        class_name = element.get_attribute('class')
+        print(f"Element tại vị trí click ({click_x}, {click_y}):")
+        print(f"- Tag: {element.tag_name}")
+        print(f"- ID: {element.get_attribute('id')}")
+        print(f"- Class: {element.get_attribute('class')}")
+        print(f"- Text: {element.text}")
+        print(f"- HTML: {element.get_attribute('outerHTML')}")
 
-            let newHoveredElements = new Set(elements);
-            let hasCommonElements = [...newHoveredElements].some(el => lastHoveredElements.has(el));
+        selector = f"{tag_name}.{class_name.replace(' ', '.')}" if class_name else tag_name
+        driver.execute_script(f"""
+            let elements = document.querySelectorAll('{selector}');
+            elements.forEach(el => el.style.border = '2px solid red');
+        """)
+        matching_elements = driver.find_elements("css selector", f"{element.tag_name}.{element.get_attribute('class').replace(' ', '.')}")
+        print("\nCác phần tử có cùng tag và class:")
+        for idx, el in enumerate(matching_elements, 1):
+            print(f"{idx}. {el.get_attribute('outerHTML')[:100]}...")  # Hiển thị một phần mã HTML
+    
+else:
+    print("Không tìm thấy element tại vị trí click!")
 
-            if (!hasCommonElements) {
-                clearHighlights();
-            }
 
-            elements.forEach(ele => {
-                ele.classList.add('highlight-border');
-                currentElements.add(ele);
-            });
+## =================================================
+## get element from mouse position 
+# # Move the mouse to a specific position (x, y)
+# x, y = 500, 300  # Example coordinates
+# actions = ActionChains(driver)
+# actions.move_by_offset(x, y).perform()
 
-            lastHoveredElements = newHoveredElements;
-        });
+# # Use JavaScript to get the element at the mouse position
+# element = driver.execute_script("return document.elementFromPoint(arguments[0], arguments[1]);", x, y)
 
-        document.addEventListener('mouseleave', clearHighlights);
+# # Print the element details
+# if element:
+#     print("Tag:", element.tag_name)
+#     print("Text:", element.text)
+#     print("Attributes:", element.get_attribute("outerHTML"))
+# else:
+#     print("No element found at the position.")
+## ===================================================
+# Keep the browser open
+input("Press Enter to close the browser...")
+driver.quit()
 
-        document.addEventListener('click', function() {
-            let elements = [...document.querySelectorAll('.highlight-border')];
-            let elementsData = elements.map(el => el.outerHTML);
-            window.highlightedElements = elementsData;
-        });
-    """)
 
-def get_highlighted_elements(driver):
-    """ Lấy danh sách phần tử đã được highlight """
-    return driver.execute_script("return window.highlightedElements || [];")
 
-def save_highlighted_elements(elements, filename="highlighted_elements.html"):
-    """ Ghi danh sách phần tử highlight vào file HTML """
-    with open(filename, "w", encoding="utf-8") as file:
-        file.write("<html><body>\n")
-        file.write("<h2>Các phần tử được highlight:</h2>\n")
-        for element in elements:
-            file.write(f"{element}\n")
-            print(extract_texts(element))
-            scraping_data_one_element(element)
-            
-        file.write("</body></html>")
-    print(f"✅ Đã lưu các phần tử highlight vào `{filename}`")
+# try:
+#     while True:
+#         pass  # Keeps the script running indefinitely
+# except KeyboardInterrupt:
+#     driver.quit()  # Ensure WebDriver quits when interrupted
 
-def main():
-    """ Chương trình chính """
-    driver = setup_driver()
-    load_website(driver, WEBSITE_URL)
-    inject_mouse_tracking_script(driver)
-    inject_highlight_script(driver)
 
-    try:
-        while True:
-            x, y = get_mouse_position(driver)
-            element = get_element_at_position(driver, x, y)
-            if element:
-                tag_name = element.tag_name
-                class_name = element.get_attribute("class")
-                if tag_name:
-                    print(f"📍 Vị trí chuột: ({x}, {y}) - Tag: {tag_name}, Class: {class_name}")
-                    input("👉 Nhấn Enter sau khi click vào phần tử cần lấy...")
-
-                    highlighted_elements = get_highlighted_elements(driver)
-                    if highlighted_elements:
-                        save_highlighted_elements(highlighted_elements)
-                    else:
-                        print("⚠ Không có phần tử nào được highlight.")
-
-            time.sleep(0.5)  # Giảm tải CPU
-
-    except KeyboardInterrupt:
-        print("\n⏹ Dừng chương trình.")
-    finally:
-        driver.quit()
-
-if __name__ == "__main__":
-    main()
+# Đóng trình duyệt
+# driver.quit()
 
 
 

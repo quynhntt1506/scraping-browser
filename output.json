@@ -1,15 +1,10 @@
 {
-    "sections": [
+    "sections_1": [
         {
-            "class-name": "description highlight-border",
+            "class-name": "verticalPost__main-title vnn-title highlight-border",
             "type": "link",
-            "text": "Bộ Xây dựng đang lập Báo cáo tiền khả thi dự án đường sắt TP HCM - Cần Thơ, mục tiêu đưa vào khai thác đồng bộ cùng tuyến đường sắt tốc độ cao Bắc Nam.",
-            "href": "https://vnexpress.net/lap-bao-cao-tien-kha-thi-duong-sat-tp-hcm-can-tho-dai-175-km-4859546.html"
-        },
-        {
-            "class-name": "font_icon widget-comment-4859546-1",
-            "type": "text",
-            "content": "9"
+            "text": "Chủ tịch TPHCM kiểm tra dự án nút giao 3.400 tỷ đồng, đề nghị gỡ vướng mặt bằng",
+            "href": "/chu-tich-tphcm-kiem-tra-du-an-nut-giao-3-400-ty-dong-de-nghi-go-vuong-mat-bang-2379867.html"
         }
     ]
 }
