@@ -1,10 +1,33 @@
 {
     "sections_1": [
         {
-            "class-name": "verticalPost__main-title vnn-title highlight-border",
+            "class-name": "boxCateItem__avt",
+            "type": "image",
+            "sources": "https://static-images.vnncdn.net/vps_images_publish/000001/000003/2025/3/13/3-lanh-dao-huyen-noi-gi-36573.jpg?width=500&s=MVqiTQnPJhtmcK1UC-9sPQ",
+            "alt": ""
+        },
+        {
+            "class-name": " lazy-loaded",
+            "type": "image",
+            "sources": "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+            "alt": "Bổ nhiệm chủ tịch xã trong ngày 7/3, lãnh đạo huyện nói gì?"
+        },
+        {
+            "class-name": "boxCateItem__main-title vnn-title",
             "type": "link",
-            "text": "Singapore lấy tên Tổng Bí thư Tô Lâm và Phu nhân đặt cho loài hoa lan mới",
-            "href": "/singapore-lay-ten-tong-bi-thu-to-lam-va-phu-nhan-dat-cho-loai-hoa-lan-moi-2379805.html"
+            "text": "Bổ nhiệm chủ tịch xã trong ngày 7/3, lãnh đạo huyện nói gì?",
+            "href": "/bo-nhiem-chu-tich-xa-trong-ngay-7-3-lanh-dao-huyen-o-quang-nam-noi-gi-2380018.html"
+        },
+        {
+            "class-name": "icon-commnet",
+            "type": "image",
+            "sources": "https://static.vnncdn.net/v1/icon/binh-luan.svg",
+            "alt": "icon binh luan"
+        },
+        {
+            "class-name": "boxCateItem__main-desc",
+            "type": "text",
+            "content": "Chủ tịch UBND huyện Núi Thành khẳng định, việc HĐND xã Tam Nghĩa họp và bầu Chủ tịch UBND xã là theo đúng luật định và xã đã trình để huyện ký đúng ngày 7/3, trước thời điểm nhận được văn bản của Tỉnh ủy Quảng Nam."
         }
     ]
 }

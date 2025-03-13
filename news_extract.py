@@ -36,27 +36,36 @@ def scraping_data (htmls):
                         "href": href
                     })
 
-            elif tag == "img" or tag == 'svg':  # Nếu là thẻ <img>
-                src = elem.get("src", "").strip()
-                alt = elem.get("alt", "").strip()
-                if src:
+            # elif tag == "img" or tag == 'svg':  # Nếu là thẻ <img>
+            #     src = elem.get("src", "").strip()
+            #     alt = elem.get("alt", "").strip()
+            #     if src:
+            #         sections.append({
+            #             "class-name": class_name,
+            #             "type": "image",
+            #             "src": src,
+            #             "alt": alt
+            #         })
+
+            elif tag == "picture" or tag == "img" or tag == 'svg':  # Nếu là thẻ <picture>
+                sources = ""
+                alt = ""
+                if tag == "picture":
+                    img = elem.find(".//img")
+                    sources = next((source.get("srcset") for source in elem.xpath(".//source") if source.get("srcset")), None) or img.get("src") if img is not None else ""
+                else:
+                    sources = elem.get("src", "").strip()
+                    alt = elem.get("alt", "").strip()
+                    
+                # sources = [source.get("srcset") for source in elem.xpath(".//source") if source.get("srcset")]
+                # img = elem.find(".//img")
+                # img_src = img.get("src") if img is not None else ""
+                if sources:
                     sections.append({
                         "class-name": class_name,
                         "type": "image",
-                        "src": src,
-                        "alt": alt
-                    })
-
-            elif tag == "picture":  # Nếu là thẻ <picture>
-                sources = [source.get("srcset") for source in elem.xpath(".//source") if source.get("srcset")]
-                img = elem.find(".//img")
-                img_src = img.get("src") if img is not None else ""
-                if sources or img_src:
-                    sections.append({
-                        "class-name": class_name,
-                        "type": "picture",
                         "sources": sources,
-                        "img_src": img_src
+                        "alt": alt
                     })
 
             else:  # Các thẻ khác
@@ -67,9 +76,19 @@ def scraping_data (htmls):
                         "type": "text",
                         "content": text_content
                     })
+        # Loại bỏ các object có class-name trùng lặp
+        unique_class_names = set()
+        filtered_sections = []
 
+        for obj in sections:
+            class_name = obj["class-name"]
+            if class_name not in unique_class_names:
+                unique_class_names.add(class_name)
+                filtered_sections.append(obj)
+                
+                
         # Ghi vào file JSON
-        output_data.update({f"sections_{index}": sections})
+        output_data.update({f"sections_{index}": filtered_sections})
 
     with open("output.json", "w", encoding="utf-8") as f:
         json.dump(output_data, f, ensure_ascii=False, indent=4)
