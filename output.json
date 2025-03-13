@@ -1,10 +1,130 @@
 {
-    "sections_1": [
+    "section_1": [
         {
-            "class-name": "verticalPost__main-title vnn-title highlight-border",
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Chiều 12/3, trên",
+            "links": []
+        },
+        {
+            "class_name": "highlight-border",
             "type": "link",
-            "text": "Singapore lấy tên Tổng Bí thư Tô Lâm và Phu nhân đặt cho loài hoa lan mới",
-            "href": "/singapore-lay-ten-tong-bi-thu-to-lam-va-phu-nhan-dat-cho-loai-hoa-lan-moi-2379805.html"
+            "content": "metro số 1",
+            "links": [
+                "https://vietnamnet.vn/nam-thanh-nien-hit-xa-don-tren-metro-ben-thanh-suoi-tien-gay-phan-cam-2366647.html"
+            ]
+        }
+    ],
+    "section_2": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Bất chấp lời nhắc nhở, người này vẫn hít xà đơn ngay trong toa tàu dù xung quanh nhiều hành khách đang đứng hoặc ngồi. Đơn vị vận hành metro số 1 xác nhận có vụ việc trên.",
+            "links": []
+        }
+    ],
+    "section_3": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Được biết đây không phải lần đầu tiên xảy ra tình trạng hành khách hít xà đơn trên tuyến metro số 1.",
+            "links": []
+        }
+    ],
+    "section_4": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Trước đó ngày 24/1, một nam thanh niên cũng từng đu bám lên tay nắm treo trần và các thanh sắt trên toa tàu điện thuộc tuyến metro số 1. Đáng lưu ý, qua xác minh, đơn vị vận hành metro số 1 xác định hành động của người này được lặp lại nhiều lần trên các chuyến tàu hướng Bến Thành - Suối Tiên và ngược lại.",
+            "links": []
+        }
+    ],
+    "section_5": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Tại Hà Nội cũng từng xảy ra trường hợp tương tự. Theo đó, vào tháng 11 năm 2024, một thanh niên đã tung lên tiktok “hướng dẫn cách đi tàu mà không mỏi” bằng cách bám vào tay nắm rồi đu người lên.",
+            "links": []
+        }
+    ],
+    "section_6": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Được biết, sau khi đăng clip lên mạng xã hội, thanh niên này nhận được nhiều “gạch đá” về cách ứng xử khi tham gia phương tiện giao thông công cộng nên đã tự xóa clip.",
+            "links": []
+        }
+    ],
+    "section_7": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Trao đổi với VietNamNet, tiến sĩ - luật sư Đặng Văn Cường, Đoàn Luật sư TP Hà Nội cho biết, những hành vi thiếu chuẩn mực nơi công cộng, xâm phạm đến trật tự công cộng là những hành vi vi phạm pháp luật và đáng lên án.",
+            "links": []
+        }
+    ],
+    "section_8": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "“Pháp luật quy định khi tham gia giao thông dù là giao thông đường sắt, đường bộ hay các loại hình giao thông khác thì người tham gia giao thông phải tuân thủ pháp luật, chấp hành các quy tắc để đảm bảo trật tự an toàn giao thông.",
+            "links": []
+        }
+    ],
+    "section_9": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Những hành vi dừng đỗ xe sai quy định, cản trở giao thông đường bộ, đi vào đường cấm hoặc có những hành vi khác gây cản trở ảnh hưởng đến những người tham gia giao thông, không tuân thủ Luật trật tự an toàn giao thông được bộ, Luật đường sắt và các văn bản pháp luật có liên quan thì tùy vào tính chất mức độ hành vi vi phạm, tùy thuộc vào hậu quả xảy ra mà người vi phạm sẽ bị xử phạt vi phạm hành chính hoặc bị truy cứu trách nhiệm hình sự”, Luật sư Đặng Văn Cường bày tỏ.",
+            "links": []
+        }
+    ],
+    "section_10": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Theo luật sư, thời gian qua xảy ra không ít các trường hợp có những hành vi phản cảm trên đường sắt đô thị, đường sắt trên cao gây ra những phiền hà, thậm chí mất an toàn cho những người tham gia giao thông khác.",
+            "links": []
+        }
+    ],
+    "section_11": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Những hành vi như đu, thậm chí tập xà đơn bằng thanh bám tay trên các tuyến metro là những hành vi nguy hiểm, có thể gây hư hỏng các thiết bị của đoàn tàu. Những hình ảnh như vậy rất phản cảm đối với một môi trường đô thị văn minh, một phương tiện hiện đại gây ra sự khó chịu, thậm chí bức xúc trong cộng đồng xã hội.",
+            "links": []
+        }
+    ],
+    "section_12": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Bởi vậy tùy vào hành vi cụ thể, tính chất của hành vi vi phạm và tùy thuộc vào hậu quả mà người thực hiện hành vi thiếu chuẩn mực nơi công cộng, gây rối trật tự công cộng hoặc vi phạm về trật tự giao thông đường bộ, đường sắt sẽ phải chịu trách nhiệm pháp lý khác nhau.",
+            "links": []
+        }
+    ],
+    "section_13": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "“Theo quy định tại Điều 7, Nghị định 144/2021/NĐ-CP, hành vi gây mất trật tự công cộng là vi phạm pháp luật, có thể bị xử phạt hành chính hoặc truy cứu trách nhiệm hình sự tùy theo mức độ nghiêm trọng”, Luật sư Cường bày tỏ.",
+            "links": []
+        }
+    ],
+    "section_14": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Một chuyên gia giao thông khác cũng nhấn mạnh, khoang tàu điện là không gian công cộng, các thiết bị như tay nắm trên metro giúp hành khách giữ thăng bằng trong quá trình tàu chạy, không dùng để làm các hoạt động thể chất hay trình diễn.",
+            "links": []
+        }
+    ],
+    "section_15": [
+        {
+            "class_name": "highlight-border",
+            "type": "text",
+            "content": "Theo chuyên gia trong khi chờ chế tài xử phạt thì những hành vi thiếu văn hóa, thiếu chuẩn mực nơi công cộng cần phải được tẩy chay, lên án. Cộng đồng xã hội không nên cổ xúy, lan tỏa những clip có hành vi thiếu chuẩn mực.",
+            "links": []
         }
     ]
 }

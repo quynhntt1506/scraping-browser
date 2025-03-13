@@ -3,8 +3,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from crawl_data import extract_texts
-from news_extract import *
+from crawl_data import scraping_data
+# from news_extract import *
 import time
 
 # Đường dẫn đến ChromeDriver
@@ -68,7 +68,7 @@ def inject_highlight_script(driver):
             currentElements.clear();
         }
         function clearFormatClass(classString) {
-            const regex = /^(mb|ml|mt|mr|p|pl|pr|pt|pb|text|bg)-\d+$/;
+            const regex = /^(mb|ml|mt|mr|p|pl|pr|pt|pb|text|bg)-\\d+$/;
             return classString.split(" ").filter(cls => !regex.test(cls)).join(" ")
         }
 
@@ -112,18 +112,17 @@ def get_highlighted_elements(driver):
     """ Lấy danh sách phần tử đã được highlight """
     return driver.execute_script("return window.highlightedElements || [];")
 
-def save_highlighted_elements(elements, filename="highlighted_elements.html"):
+def save_highlighted_elements(driver, elements, filename="highlighted_elements.html"):
+    # scraping data and write to json file
+    scraping_data(driver, elements)
     """ Ghi danh sách phần tử highlight vào file HTML """
     with open(filename, "w", encoding="utf-8") as file:
-        # scraping data and write to json file
-        scraping_data (elements)
-
         # write html to highlighted_elements.html
         file.write("<html><body>\n")
         file.write("<h2>Các phần tử được highlight:</h2>\n")
         for element in elements:
             file.write(f"{element}\n")
-            print(extract_texts(element))
+            # print(extract_texts(element))
             # scraping_data_one_element(element)
             
         file.write("</body></html>")
@@ -153,17 +152,22 @@ def handle_choose_data(driver, url):
                     # ===========
                     highlighted_elements = get_highlighted_elements(driver)
                     if highlighted_elements:
-                        save_highlighted_elements(highlighted_elements)
+                        save_highlighted_elements(driver, highlighted_elements)
                     else:
                         print("⚠ Không có phần tử nào được highlight.")
 
             time.sleep(0.5)  # Giảm tải CPU
-
     except KeyboardInterrupt:
         print("\n⏹ Dừng chương trình.")
-        driver.quit()
+        try:
+            driver.quit()
+        except Exception as e:
+            print(f"Lỗi khi đóng trình duyệt: {e}")
     finally:
-        driver.quit()
+        try:
+            driver.quit()
+        except Exception as e: 
+            print(f"Lỗi khi đóng trình duyệt: {e}")
 
 if __name__ == "__main__":    
     driver = setup_driver()
