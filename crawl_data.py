@@ -46,7 +46,7 @@ def get_data_to_table (output_data):
     popup.style.maxWidth = '1500px';
     popup.style.fontFamily = 'Arial, sans-serif';
     popup.innerHTML = `
-        <h2 style="text-align:center; margin-bottom: 15px; color: #333;">📌 Thông Tin Chi Tiết</h2>
+        <h2 style="text-align:center; margin-bottom: 15px; color: #333;">Kết quả phân tích dữ liệu</h2>
         <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px;">
             <table border="1" cellspacing="0" cellpadding="8" style="width:100%; border-collapse:collapse; text-align:left; font-size: 14px;">
                 <thead style="position: sticky; top: 0; background: white; z-index: 10;">
@@ -99,22 +99,21 @@ def scraping_data (driver, htmls):
                 if href and text:
                     sections.append(ElementInfo(class_name, "link", text, href))
 
-            elif tag == "img" or tag == 'svg':  # Nếu là thẻ <img>
-                src = elem.get("src", "").strip()
-                alt = elem.get("alt", "").strip()
-                if src:
-                    sections.append(ElementInfo(class_name, "image", alt, src))
-
-            # elif tag == "picture":  # Nếu là thẻ <picture>
-            #     sources = [source.get("srcset") for source in elem.xpath(".//source") if source.get("srcset")]
-            #     img = elem.find(".//img")
-            #     img_src = img.get("src") if img is not None else ""
-            #     if sources or img_src:
-            #         sections.append(ElementInfo(class_name, "picture", sources, img_src))
+            elif tag == "picture" or tag == "img" or tag == 'svg':  # Nếu là thẻ <img>
+                sources = ""
+                alt = ""
+                if tag == "picture":
+                    img = elem.find(".//img")
+                    sources = next((source.get("srcset") for source in elem.xpath(".//source") if source.get("srcset")), None) or img.get("src") if img is not None else ""
+                else:
+                    sources = elem.get("src", "").strip()
+                    alt = elem.get("alt", "").strip()
+                if sources:
+                    sections.append(ElementInfo(class_name, "image", alt, sources))
 
             else:  # Các thẻ khác
                 text_content = (elem.text or "").strip()
-                if text_content:
+                if text_content != "":
                     sections.append(ElementInfo(class_name, "text", text_content, ''))
 
         # Ghi vào file JSON
@@ -130,6 +129,7 @@ def scraping_data (driver, htmls):
         output_data.update({f"section_{index}": json_data})
 
     # Lọc bỏ nội dung trùng lặp trong mỗi section
+    # ============
     filtered_data = {}
     for section, items in output_data.items():
         grouped_content = {}  # Dùng dictionary để gom nhóm theo content
@@ -151,6 +151,7 @@ def scraping_data (driver, htmls):
 
         filtered_data[section] = list(grouped_content.values())
     driver.execute_script(get_data_to_table(filtered_data))
+    # ============
     print(output_data)
     with open("output.json", "w", encoding="utf-8") as f:
         json.dump(filtered_data, f, ensure_ascii=False, indent=4)
